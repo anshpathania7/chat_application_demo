@@ -1,0 +1,18 @@
+{
+  "hosting": {
+    "public": "build/web",
+"site": "chatapplicationdemo-a2cdf",
+    "ignore": [
+      "firebase.json",
+
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
