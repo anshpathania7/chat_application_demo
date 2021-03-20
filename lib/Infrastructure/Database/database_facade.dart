@@ -14,12 +14,11 @@ class DatabaseFacade implements IDatabaseFacade {
   //Send Messages to room
   @override
   Future<bool> sendChatMessage(
-      {ChatModel chatModel, ChatroomModel chatroomModel}) async {
-    final uid = await _auth.currentUser().then((value) => value.uid);
-    final chatroomRef = _firestore
-        .collection('Chatrooms')
-        .document('${chatroomModel.chatroomId}')
-        .collection('chats');
+      {ChatModel chatModel, ChatroomModel chatroomModel, String rid}) async {
+    final uid = chatModel.senderUid;
+    final id = (rid.isNotEmpty) ? rid.trim() : chatroomModel.chatroomId.trim();
+    final chatroomRef =
+        _firestore.collection('Chatrooms').document('$id').collection('chats');
     final result = await chatroomRef
         .add(chatModel.getJson())
         .then((value) => true)
@@ -60,7 +59,7 @@ class DatabaseFacade implements IDatabaseFacade {
         .collection('Chatrooms')
         .document('$chatroomId')
         .collection('chats')
-        .orderBy('sentAt');
+        .orderBy('sentAt', descending: true);
   }
 
   @override
@@ -75,5 +74,13 @@ class DatabaseFacade implements IDatabaseFacade {
         .setData({'roomName': getRoomName.data['roomName']});
     await PushNotifications().getInstance().subscribeToThisRoom(roomId: roomId);
     return true;
+  }
+
+  Future<UserModel> getUser() async {
+    final userVal = await _auth.currentUser().then((value) => value);
+    return UserModel(
+      name: userVal.displayName,
+      uid: userVal.uid,
+    );
   }
 }

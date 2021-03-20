@@ -14,8 +14,10 @@ class _$AuthenticationEventTearOff {
   const _$AuthenticationEventTearOff();
 
 // ignore: unused_element
-  _Started started() {
-    return const _Started();
+  _Started started({BuildContext ctx}) {
+    return _Started(
+      ctx: ctx,
+    );
   }
 
 // ignore: unused_element
@@ -47,7 +49,7 @@ const $AuthenticationEvent = _$AuthenticationEventTearOff();
 mixin _$AuthenticationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object>({
-    @required TResult started(),
+    @required TResult started(BuildContext ctx),
     @required TResult isLoggedIn(),
     @required TResult isLoggedOut(),
     @required TResult login(),
@@ -55,7 +57,7 @@ mixin _$AuthenticationEvent {
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
-    TResult started(),
+    TResult started(BuildContext ctx),
     TResult isLoggedIn(),
     TResult isLoggedOut(),
     TResult login(),
@@ -102,6 +104,7 @@ class _$AuthenticationEventCopyWithImpl<$Res>
 abstract class _$StartedCopyWith<$Res> {
   factory _$StartedCopyWith(_Started value, $Res Function(_Started) then) =
       __$StartedCopyWithImpl<$Res>;
+  $Res call({BuildContext ctx});
 }
 
 /// @nodoc
@@ -113,29 +116,58 @@ class __$StartedCopyWithImpl<$Res>
 
   @override
   _Started get _value => super._value as _Started;
+
+  @override
+  $Res call({
+    Object ctx = freezed,
+  }) {
+    return _then(_Started(
+      ctx: ctx == freezed ? _value.ctx : ctx as BuildContext,
+    ));
+  }
 }
 
 /// @nodoc
-class _$_Started implements _Started {
-  const _$_Started();
+class _$_Started with DiagnosticableTreeMixin implements _Started {
+  const _$_Started({this.ctx});
 
   @override
-  String toString() {
-    return 'AuthenticationEvent.started()';
+  final BuildContext ctx;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AuthenticationEvent.started(ctx: $ctx)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthenticationEvent.started'))
+      ..add(DiagnosticsProperty('ctx', ctx));
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Started);
+    return identical(this, other) ||
+        (other is _Started &&
+            (identical(other.ctx, ctx) ||
+                const DeepCollectionEquality().equals(other.ctx, ctx)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(ctx);
+
+  @JsonKey(ignore: true)
+  @override
+  _$StartedCopyWith<_Started> get copyWith =>
+      __$StartedCopyWithImpl<_Started>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object>({
-    @required TResult started(),
+    @required TResult started(BuildContext ctx),
     @required TResult isLoggedIn(),
     @required TResult isLoggedOut(),
     @required TResult login(),
@@ -146,13 +178,13 @@ class _$_Started implements _Started {
     assert(isLoggedOut != null);
     assert(login != null);
     assert(logout != null);
-    return started();
+    return started(ctx);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
-    TResult started(),
+    TResult started(BuildContext ctx),
     TResult isLoggedIn(),
     TResult isLoggedOut(),
     TResult login(),
@@ -161,7 +193,7 @@ class _$_Started implements _Started {
   }) {
     assert(orElse != null);
     if (started != null) {
-      return started();
+      return started(ctx);
     }
     return orElse();
   }
@@ -202,7 +234,11 @@ class _$_Started implements _Started {
 }
 
 abstract class _Started implements AuthenticationEvent {
-  const factory _Started() = _$_Started;
+  const factory _Started({BuildContext ctx}) = _$_Started;
+
+  BuildContext get ctx;
+  @JsonKey(ignore: true)
+  _$StartedCopyWith<_Started> get copyWith;
 }
 
 /// @nodoc
@@ -225,12 +261,19 @@ class __$IsLoggedInCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$_IsLoggedIn implements _IsLoggedIn {
+class _$_IsLoggedIn with DiagnosticableTreeMixin implements _IsLoggedIn {
   const _$_IsLoggedIn();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationEvent.isLoggedIn()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthenticationEvent.isLoggedIn'));
   }
 
   @override
@@ -244,7 +287,7 @@ class _$_IsLoggedIn implements _IsLoggedIn {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object>({
-    @required TResult started(),
+    @required TResult started(BuildContext ctx),
     @required TResult isLoggedIn(),
     @required TResult isLoggedOut(),
     @required TResult login(),
@@ -261,7 +304,7 @@ class _$_IsLoggedIn implements _IsLoggedIn {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
-    TResult started(),
+    TResult started(BuildContext ctx),
     TResult isLoggedIn(),
     TResult isLoggedOut(),
     TResult login(),
@@ -334,12 +377,19 @@ class __$IsLoggedOutCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$_IsLoggedOut implements _IsLoggedOut {
+class _$_IsLoggedOut with DiagnosticableTreeMixin implements _IsLoggedOut {
   const _$_IsLoggedOut();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationEvent.isLoggedOut()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthenticationEvent.isLoggedOut'));
   }
 
   @override
@@ -353,7 +403,7 @@ class _$_IsLoggedOut implements _IsLoggedOut {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object>({
-    @required TResult started(),
+    @required TResult started(BuildContext ctx),
     @required TResult isLoggedIn(),
     @required TResult isLoggedOut(),
     @required TResult login(),
@@ -370,7 +420,7 @@ class _$_IsLoggedOut implements _IsLoggedOut {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
-    TResult started(),
+    TResult started(BuildContext ctx),
     TResult isLoggedIn(),
     TResult isLoggedOut(),
     TResult login(),
@@ -440,12 +490,18 @@ class __$LoginCopyWithImpl<$Res> extends _$AuthenticationEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$_Login implements _Login {
+class _$_Login with DiagnosticableTreeMixin implements _Login {
   const _$_Login();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationEvent.login()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'AuthenticationEvent.login'));
   }
 
   @override
@@ -459,7 +515,7 @@ class _$_Login implements _Login {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object>({
-    @required TResult started(),
+    @required TResult started(BuildContext ctx),
     @required TResult isLoggedIn(),
     @required TResult isLoggedOut(),
     @required TResult login(),
@@ -476,7 +532,7 @@ class _$_Login implements _Login {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
-    TResult started(),
+    TResult started(BuildContext ctx),
     TResult isLoggedIn(),
     TResult isLoggedOut(),
     TResult login(),
@@ -547,12 +603,18 @@ class __$LogoutCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$_Logout implements _Logout {
+class _$_Logout with DiagnosticableTreeMixin implements _Logout {
   const _$_Logout();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationEvent.logout()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'AuthenticationEvent.logout'));
   }
 
   @override
@@ -566,7 +628,7 @@ class _$_Logout implements _Logout {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object>({
-    @required TResult started(),
+    @required TResult started(BuildContext ctx),
     @required TResult isLoggedIn(),
     @required TResult isLoggedOut(),
     @required TResult login(),
@@ -583,7 +645,7 @@ class _$_Logout implements _Logout {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
-    TResult started(),
+    TResult started(BuildContext ctx),
     TResult isLoggedIn(),
     TResult isLoggedOut(),
     TResult login(),
@@ -729,7 +791,9 @@ class __$AuthenticationStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$_AuthenticationState implements _AuthenticationState {
+class _$_AuthenticationState
+    with DiagnosticableTreeMixin
+    implements _AuthenticationState {
   _$_AuthenticationState({this.isLoggedIn, this.isChecking});
 
   @override
@@ -738,8 +802,17 @@ class _$_AuthenticationState implements _AuthenticationState {
   final bool isChecking;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationState(isLoggedIn: $isLoggedIn, isChecking: $isChecking)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthenticationState'))
+      ..add(DiagnosticsProperty('isLoggedIn', isLoggedIn))
+      ..add(DiagnosticsProperty('isChecking', isChecking));
   }
 
   @override

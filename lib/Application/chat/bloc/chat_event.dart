@@ -7,4 +7,7 @@ abstract class ChatEvent with _$ChatEvent {
       @required ChatroomModel chatroomModel}) = _Started;
   const factory ChatEvent.sendThisMessage({@required String message}) =
       _sendThisMessage;
+
+  const factory ChatEvent.sentByForegroundNoti(
+      {@required String rid, @required String rname}) = _SentByForegroundNoti;
 }

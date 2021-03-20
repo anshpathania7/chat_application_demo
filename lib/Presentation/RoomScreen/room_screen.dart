@@ -40,7 +40,7 @@ class _RoomScreenState extends State<RoomScreen> {
       create: (context) => AuthenticationBloc(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Welcome Back"),
+          title: Text("Chatrooms"),
           automaticallyImplyLeading: false,
           actions: [
             BlocBuilder<AuthenticationBloc, AuthenticationState>(
@@ -63,21 +63,44 @@ class _RoomScreenState extends State<RoomScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           OutlinedButton(
-                              onPressed: () {
-                                ExtendedNavigator.of(context).pop();
-                                JoinRoomDialog(
-                                    blocContext: context,
-                                    controller: _joinRoomController);
-                              },
-                              child: Text("Join")),
+                            style: OutlinedButton.styleFrom(
+                                backgroundColor: Colors.blue),
+                            onPressed: () {
+                              ExtendedNavigator.of(context).pop();
+                              JoinRoomDialog(
+                                  blocContext: context,
+                                  controller: _joinRoomController);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "Join a room ?",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
                           OutlinedButton(
-                              onPressed: () {
-                                ExtendedNavigator.of(context).pop();
-                                CreateRoomDialog(
-                                    blocContext: context,
-                                    controller: _controller);
-                              },
-                              child: Text("Create"))
+                            style: OutlinedButton.styleFrom(
+                                backgroundColor: Colors.blue),
+                            onPressed: () {
+                              ExtendedNavigator.of(context).pop();
+                              CreateRoomDialog(
+                                  blocContext: context,
+                                  controller: _controller);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "Create a room",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ));
@@ -122,6 +145,7 @@ class _RoomScreenState extends State<RoomScreen> {
                         child: ChatroomTile(
                           chatroomModel: ChatroomModel(snap: snapshot),
                           userModel: state.user,
+                          scaffoldContext: context,
                         ),
                       ));
             }

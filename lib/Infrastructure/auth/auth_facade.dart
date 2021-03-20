@@ -41,7 +41,7 @@ class AuthFacade implements IAuthFacade {
 
   @override
   Future<bool> isUserSignedIn() async {
-    final userVal = firebaseAuth.currentUser;
+    final userVal = await firebaseAuth.currentUser().then((value) => value);
     return (userVal != null) ? true : false;
   }
 

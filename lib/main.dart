@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:chat_application_demo/Infrastructure/services/push_notifications.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'routes.gr.dart' as routes;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -10,12 +8,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //await Firest.initializeApp();
   if (kIsWeb) {
-    PushNotifications().initialize(isThisWeb: true);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+        .then((_) {
+      runApp(MyApp());
+    });
   } else {
-    PushNotifications().initialize(isThisWeb: false);
+    runApp(MyApp());
   }
-
-  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

@@ -29,6 +29,15 @@ class _$ChatEventTearOff {
       message: message,
     );
   }
+
+// ignore: unused_element
+  _SentByForegroundNoti sentByForegroundNoti(
+      {@required String rid, @required String rname}) {
+    return _SentByForegroundNoti(
+      rid: rid,
+      rname: rname,
+    );
+  }
 }
 
 /// @nodoc
@@ -42,22 +51,26 @@ mixin _$ChatEvent {
     @required
         TResult started(UserModel currentUser, ChatroomModel chatroomModel),
     @required TResult sendThisMessage(String message),
+    @required TResult sentByForegroundNoti(String rid, String rname),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult started(UserModel currentUser, ChatroomModel chatroomModel),
     TResult sendThisMessage(String message),
+    TResult sentByForegroundNoti(String rid, String rname),
     @required TResult orElse(),
   });
   @optionalTypeArgs
   TResult map<TResult extends Object>({
     @required TResult started(_Started value),
     @required TResult sendThisMessage(_sendThisMessage value),
+    @required TResult sentByForegroundNoti(_SentByForegroundNoti value),
   });
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object>({
     TResult started(_Started value),
     TResult sendThisMessage(_sendThisMessage value),
+    TResult sentByForegroundNoti(_SentByForegroundNoti value),
     @required TResult orElse(),
   });
 }
@@ -154,9 +167,11 @@ class _$_Started implements _Started {
     @required
         TResult started(UserModel currentUser, ChatroomModel chatroomModel),
     @required TResult sendThisMessage(String message),
+    @required TResult sentByForegroundNoti(String rid, String rname),
   }) {
     assert(started != null);
     assert(sendThisMessage != null);
+    assert(sentByForegroundNoti != null);
     return started(currentUser, chatroomModel);
   }
 
@@ -165,6 +180,7 @@ class _$_Started implements _Started {
   TResult maybeWhen<TResult extends Object>({
     TResult started(UserModel currentUser, ChatroomModel chatroomModel),
     TResult sendThisMessage(String message),
+    TResult sentByForegroundNoti(String rid, String rname),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -179,9 +195,11 @@ class _$_Started implements _Started {
   TResult map<TResult extends Object>({
     @required TResult started(_Started value),
     @required TResult sendThisMessage(_sendThisMessage value),
+    @required TResult sentByForegroundNoti(_SentByForegroundNoti value),
   }) {
     assert(started != null);
     assert(sendThisMessage != null);
+    assert(sentByForegroundNoti != null);
     return started(this);
   }
 
@@ -190,6 +208,7 @@ class _$_Started implements _Started {
   TResult maybeMap<TResult extends Object>({
     TResult started(_Started value),
     TResult sendThisMessage(_sendThisMessage value),
+    TResult sentByForegroundNoti(_SentByForegroundNoti value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -274,9 +293,11 @@ class _$_sendThisMessage implements _sendThisMessage {
     @required
         TResult started(UserModel currentUser, ChatroomModel chatroomModel),
     @required TResult sendThisMessage(String message),
+    @required TResult sentByForegroundNoti(String rid, String rname),
   }) {
     assert(started != null);
     assert(sendThisMessage != null);
+    assert(sentByForegroundNoti != null);
     return sendThisMessage(message);
   }
 
@@ -285,6 +306,7 @@ class _$_sendThisMessage implements _sendThisMessage {
   TResult maybeWhen<TResult extends Object>({
     TResult started(UserModel currentUser, ChatroomModel chatroomModel),
     TResult sendThisMessage(String message),
+    TResult sentByForegroundNoti(String rid, String rname),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -299,9 +321,11 @@ class _$_sendThisMessage implements _sendThisMessage {
   TResult map<TResult extends Object>({
     @required TResult started(_Started value),
     @required TResult sendThisMessage(_sendThisMessage value),
+    @required TResult sentByForegroundNoti(_SentByForegroundNoti value),
   }) {
     assert(started != null);
     assert(sendThisMessage != null);
+    assert(sentByForegroundNoti != null);
     return sendThisMessage(this);
   }
 
@@ -310,6 +334,7 @@ class _$_sendThisMessage implements _sendThisMessage {
   TResult maybeMap<TResult extends Object>({
     TResult started(_Started value),
     TResult sendThisMessage(_sendThisMessage value),
+    TResult sentByForegroundNoti(_SentByForegroundNoti value),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -330,6 +355,143 @@ abstract class _sendThisMessage implements ChatEvent {
 }
 
 /// @nodoc
+abstract class _$SentByForegroundNotiCopyWith<$Res> {
+  factory _$SentByForegroundNotiCopyWith(_SentByForegroundNoti value,
+          $Res Function(_SentByForegroundNoti) then) =
+      __$SentByForegroundNotiCopyWithImpl<$Res>;
+  $Res call({String rid, String rname});
+}
+
+/// @nodoc
+class __$SentByForegroundNotiCopyWithImpl<$Res>
+    extends _$ChatEventCopyWithImpl<$Res>
+    implements _$SentByForegroundNotiCopyWith<$Res> {
+  __$SentByForegroundNotiCopyWithImpl(
+      _SentByForegroundNoti _value, $Res Function(_SentByForegroundNoti) _then)
+      : super(_value, (v) => _then(v as _SentByForegroundNoti));
+
+  @override
+  _SentByForegroundNoti get _value => super._value as _SentByForegroundNoti;
+
+  @override
+  $Res call({
+    Object rid = freezed,
+    Object rname = freezed,
+  }) {
+    return _then(_SentByForegroundNoti(
+      rid: rid == freezed ? _value.rid : rid as String,
+      rname: rname == freezed ? _value.rname : rname as String,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_SentByForegroundNoti implements _SentByForegroundNoti {
+  const _$_SentByForegroundNoti({@required this.rid, @required this.rname})
+      : assert(rid != null),
+        assert(rname != null);
+
+  @override
+  final String rid;
+  @override
+  final String rname;
+
+  @override
+  String toString() {
+    return 'ChatEvent.sentByForegroundNoti(rid: $rid, rname: $rname)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _SentByForegroundNoti &&
+            (identical(other.rid, rid) ||
+                const DeepCollectionEquality().equals(other.rid, rid)) &&
+            (identical(other.rname, rname) ||
+                const DeepCollectionEquality().equals(other.rname, rname)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(rid) ^
+      const DeepCollectionEquality().hash(rname);
+
+  @JsonKey(ignore: true)
+  @override
+  _$SentByForegroundNotiCopyWith<_SentByForegroundNoti> get copyWith =>
+      __$SentByForegroundNotiCopyWithImpl<_SentByForegroundNoti>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object>({
+    @required
+        TResult started(UserModel currentUser, ChatroomModel chatroomModel),
+    @required TResult sendThisMessage(String message),
+    @required TResult sentByForegroundNoti(String rid, String rname),
+  }) {
+    assert(started != null);
+    assert(sendThisMessage != null);
+    assert(sentByForegroundNoti != null);
+    return sentByForegroundNoti(rid, rname);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object>({
+    TResult started(UserModel currentUser, ChatroomModel chatroomModel),
+    TResult sendThisMessage(String message),
+    TResult sentByForegroundNoti(String rid, String rname),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (sentByForegroundNoti != null) {
+      return sentByForegroundNoti(rid, rname);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object>({
+    @required TResult started(_Started value),
+    @required TResult sendThisMessage(_sendThisMessage value),
+    @required TResult sentByForegroundNoti(_SentByForegroundNoti value),
+  }) {
+    assert(started != null);
+    assert(sendThisMessage != null);
+    assert(sentByForegroundNoti != null);
+    return sentByForegroundNoti(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object>({
+    TResult started(_Started value),
+    TResult sendThisMessage(_sendThisMessage value),
+    TResult sentByForegroundNoti(_SentByForegroundNoti value),
+    @required TResult orElse(),
+  }) {
+    assert(orElse != null);
+    if (sentByForegroundNoti != null) {
+      return sentByForegroundNoti(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SentByForegroundNoti implements ChatEvent {
+  const factory _SentByForegroundNoti(
+      {@required String rid, @required String rname}) = _$_SentByForegroundNoti;
+
+  String get rid;
+  String get rname;
+  @JsonKey(ignore: true)
+  _$SentByForegroundNotiCopyWith<_SentByForegroundNoti> get copyWith;
+}
+
+/// @nodoc
 class _$ChatStateTearOff {
   const _$ChatStateTearOff();
 
@@ -338,11 +500,13 @@ class _$ChatStateTearOff {
       {bool loadingMessages,
       ChatroomModel chatroomModel,
       UserModel userModel,
+      String rid,
       Query dbQuery}) {
     return _ChatState(
       loadingMessages: loadingMessages,
       chatroomModel: chatroomModel,
       userModel: userModel,
+      rid: rid,
       dbQuery: dbQuery,
     );
   }
@@ -357,6 +521,7 @@ mixin _$ChatState {
   bool get loadingMessages;
   ChatroomModel get chatroomModel;
   UserModel get userModel;
+  String get rid;
   Query get dbQuery;
 
   @JsonKey(ignore: true)
@@ -371,6 +536,7 @@ abstract class $ChatStateCopyWith<$Res> {
       {bool loadingMessages,
       ChatroomModel chatroomModel,
       UserModel userModel,
+      String rid,
       Query dbQuery});
 }
 
@@ -387,6 +553,7 @@ class _$ChatStateCopyWithImpl<$Res> implements $ChatStateCopyWith<$Res> {
     Object loadingMessages = freezed,
     Object chatroomModel = freezed,
     Object userModel = freezed,
+    Object rid = freezed,
     Object dbQuery = freezed,
   }) {
     return _then(_value.copyWith(
@@ -398,6 +565,7 @@ class _$ChatStateCopyWithImpl<$Res> implements $ChatStateCopyWith<$Res> {
           : chatroomModel as ChatroomModel,
       userModel:
           userModel == freezed ? _value.userModel : userModel as UserModel,
+      rid: rid == freezed ? _value.rid : rid as String,
       dbQuery: dbQuery == freezed ? _value.dbQuery : dbQuery as Query,
     ));
   }
@@ -413,6 +581,7 @@ abstract class _$ChatStateCopyWith<$Res> implements $ChatStateCopyWith<$Res> {
       {bool loadingMessages,
       ChatroomModel chatroomModel,
       UserModel userModel,
+      String rid,
       Query dbQuery});
 }
 
@@ -430,6 +599,7 @@ class __$ChatStateCopyWithImpl<$Res> extends _$ChatStateCopyWithImpl<$Res>
     Object loadingMessages = freezed,
     Object chatroomModel = freezed,
     Object userModel = freezed,
+    Object rid = freezed,
     Object dbQuery = freezed,
   }) {
     return _then(_ChatState(
@@ -441,6 +611,7 @@ class __$ChatStateCopyWithImpl<$Res> extends _$ChatStateCopyWithImpl<$Res>
           : chatroomModel as ChatroomModel,
       userModel:
           userModel == freezed ? _value.userModel : userModel as UserModel,
+      rid: rid == freezed ? _value.rid : rid as String,
       dbQuery: dbQuery == freezed ? _value.dbQuery : dbQuery as Query,
     ));
   }
@@ -449,7 +620,11 @@ class __$ChatStateCopyWithImpl<$Res> extends _$ChatStateCopyWithImpl<$Res>
 /// @nodoc
 class _$_ChatState implements _ChatState {
   _$_ChatState(
-      {this.loadingMessages, this.chatroomModel, this.userModel, this.dbQuery});
+      {this.loadingMessages,
+      this.chatroomModel,
+      this.userModel,
+      this.rid,
+      this.dbQuery});
 
   @override
   final bool loadingMessages;
@@ -458,11 +633,13 @@ class _$_ChatState implements _ChatState {
   @override
   final UserModel userModel;
   @override
+  final String rid;
+  @override
   final Query dbQuery;
 
   @override
   String toString() {
-    return 'ChatState(loadingMessages: $loadingMessages, chatroomModel: $chatroomModel, userModel: $userModel, dbQuery: $dbQuery)';
+    return 'ChatState(loadingMessages: $loadingMessages, chatroomModel: $chatroomModel, userModel: $userModel, rid: $rid, dbQuery: $dbQuery)';
   }
 
   @override
@@ -478,6 +655,8 @@ class _$_ChatState implements _ChatState {
             (identical(other.userModel, userModel) ||
                 const DeepCollectionEquality()
                     .equals(other.userModel, userModel)) &&
+            (identical(other.rid, rid) ||
+                const DeepCollectionEquality().equals(other.rid, rid)) &&
             (identical(other.dbQuery, dbQuery) ||
                 const DeepCollectionEquality().equals(other.dbQuery, dbQuery)));
   }
@@ -488,6 +667,7 @@ class _$_ChatState implements _ChatState {
       const DeepCollectionEquality().hash(loadingMessages) ^
       const DeepCollectionEquality().hash(chatroomModel) ^
       const DeepCollectionEquality().hash(userModel) ^
+      const DeepCollectionEquality().hash(rid) ^
       const DeepCollectionEquality().hash(dbQuery);
 
   @JsonKey(ignore: true)
@@ -501,6 +681,7 @@ abstract class _ChatState implements ChatState {
       {bool loadingMessages,
       ChatroomModel chatroomModel,
       UserModel userModel,
+      String rid,
       Query dbQuery}) = _$_ChatState;
 
   @override
@@ -509,6 +690,8 @@ abstract class _ChatState implements ChatState {
   ChatroomModel get chatroomModel;
   @override
   UserModel get userModel;
+  @override
+  String get rid;
   @override
   Query get dbQuery;
   @override

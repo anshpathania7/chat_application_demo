@@ -6,6 +6,7 @@ abstract class ChatState with _$ChatState {
     bool loadingMessages,
     ChatroomModel chatroomModel,
     UserModel userModel,
+    String rid,
     Query dbQuery,
   }) = _ChatState;
   factory ChatState.initial() => ChatState();

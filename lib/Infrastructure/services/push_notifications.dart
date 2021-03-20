@@ -1,13 +1,16 @@
 import 'dart:convert';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:chat_application_demo/Domain/core/chat_model.dart';
 import 'package:chat_application_demo/Domain/core/chat_room_model.dart';
 import 'package:chat_application_demo/Domain/core/user_model.dart';
 import 'package:chat_application_demo/Domain/services/i_push_notifications.dart';
+import 'package:chat_application_demo/routes.gr.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
@@ -25,10 +28,12 @@ class PushNotifications implements IPushNotifications {
   static PushNotifications instance = null;
   bool isWeb;
   String currentRoomId;
+  BuildContext mainContext;
 
   @override
-  void initialize({bool isThisWeb}) {
+  void initialize({bool isThisWeb, BuildContext ctx}) {
     isWeb = isThisWeb;
+    this.mainContext = ctx;
     this.currentRoomId = "";
     this.firebaseNotification = new FirebaseMessaging();
     if (!isWeb) {
@@ -38,11 +43,36 @@ class PushNotifications implements IPushNotifications {
       this.initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid,
       );
+      this.flutterLocalNotificationsPlugin.initialize(initializationSettings,
+          onSelectNotification: (payload) async {
+        String roomId, roomName;
+        final ridCheck = 'roomid: ';
+        final rnameCheck = 'screen: ';
+        final val = payload.substring(1, payload.length - 1).split(",");
+        for (String i in val) {
+          if (i.contains(ridCheck)) {
+            roomId = i.substring(ridCheck.length - 1);
+          } else if (i.contains(rnameCheck)) {
+            roomName = i.substring(rnameCheck.length - 1);
+          }
+        }
+        await ExtendedNavigator.root.push(Routes.chatScreen,
+            arguments: ChatScreenArguments(
+                rid: roomId, rname: roomName, sentViaForegroundNoti: true));
+      });
       this.firebaseNotification.configure(
-            onBackgroundMessage: _myFcmHandler,
-            onMessage: (message) async => getNotifications(message, isWeb),
-          );
+          onBackgroundMessage: _myFcmHandler,
+          onMessage: (message) async => getNotifications(message, isWeb),
+          onResume: (message) async {
+            await ExtendedNavigator.root.push(Routes.chatScreen,
+                arguments: ChatScreenArguments(
+                    rid: message['data']['roomid'],
+                    rname: message['data']['screen'],
+                    sentViaForegroundNoti: true));
+          },
+          onLaunch: (message) async => print("from background"));
     }
+
     instance = this;
     // await getToken();
   }
@@ -76,23 +106,25 @@ class PushNotifications implements IPushNotifications {
     final rid = data['data']['roomid'];
     if (!isWeb) {
       androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        '6969',
+        'message_pusher_channel',
         'message pushing example',
         'message pushing service',
         icon: '@mipmap/ic_launcher',
         importance: Importance.max,
-        priority: Priority.high,
+        priority: Priority.max,
         enableVibration: true,
         fullScreenIntent: true,
         enableLights: true,
         playSound: true,
+        autoCancel: true,
         visibility: NotificationVisibility.public,
         showWhen: true,
       );
       platformChannelSpecifics =
           NotificationDetails(android: androidPlatformChannelSpecifics);
-      await FlutterLocalNotificationsPlugin()
-          .show(0, roomname, message, platformChannelSpecifics);
+      await flutterLocalNotificationsPlugin.show(
+          0, roomname, message, platformChannelSpecifics,
+          payload: data['data'].toString());
     }
   }
 
@@ -143,9 +175,12 @@ class PushNotifications implements IPushNotifications {
   void setRoomId({String roomid}) {
     this.currentRoomId = roomid;
   }
+
+  void openScreenFromPayload(Map<String, dynamic> payload) {}
 }
 
 Future<dynamic> _myFcmHandler(Map<String, dynamic> message) async {
   bool isWeb = PushNotifications().getInstance().isWeb;
+  print(message);
   PushNotifications().getInstance().getNotifications(message, isWeb);
 }

@@ -9,8 +9,10 @@ import 'package:flutter/material.dart';
 class ChatroomTile extends StatelessWidget {
   final ChatroomModel chatroomModel;
   final UserModel userModel;
+  final BuildContext scaffoldContext;
 
-  const ChatroomTile({Key key, this.chatroomModel, this.userModel})
+  const ChatroomTile(
+      {Key key, this.chatroomModel, this.userModel, this.scaffoldContext})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,9 @@ class ChatroomTile extends StatelessWidget {
             .setRoomId(roomid: chatroomModel.chatroomId);
         ExtendedNavigator.of(context).push(Routes.chatScreen,
             arguments: ChatScreenArguments(
-                chatroomModel: chatroomModel, userModel: userModel));
+                chatroomModel: chatroomModel,
+                userModel: userModel,
+                sentViaForegroundNoti: false));
       },
       child: Container(
         height: 70,
@@ -44,6 +48,7 @@ class ChatroomTile extends StatelessWidget {
             Spacer(),
             ShareLink(
               chatroomModel: chatroomModel,
+              scaffoldContext: scaffoldContext,
             ),
             const SizedBox(
               width: 10,

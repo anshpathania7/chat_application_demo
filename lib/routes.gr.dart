@@ -14,13 +14,16 @@ import 'Domain/core/user_model.dart';
 import 'Presentation/ChatScreen/chat_screen.dart';
 import 'Presentation/LoginScreen/login_screen.dart';
 import 'Presentation/RoomScreen/room_screen.dart';
+import 'Presentation/SplashScreen/SpashScreen.dart';
 
 class Routes {
-  static const String loginScreen = '/';
+  static const String loginScreen = '/login-screen';
+  static const String splashScreen = '/';
   static const String roomScreen = '/room-screen';
   static const String chatScreen = '/chat-screen';
   static const all = <String>{
     loginScreen,
+    splashScreen,
     roomScreen,
     chatScreen,
   };
@@ -31,6 +34,7 @@ class Router extends RouterBase {
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
     RouteDef(Routes.loginScreen, page: LoginScreen),
+    RouteDef(Routes.splashScreen, page: SplashScreen),
     RouteDef(Routes.roomScreen, page: RoomScreen),
     RouteDef(Routes.chatScreen, page: ChatScreen),
   ];
@@ -40,6 +44,12 @@ class Router extends RouterBase {
     LoginScreen: (data) {
       return PageRouteBuilder<dynamic>(
         pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
+        settings: data,
+      );
+    },
+    SplashScreen: (data) {
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) => SplashScreen(),
         settings: data,
       );
     },
@@ -59,6 +69,9 @@ class Router extends RouterBase {
           key: args.key,
           userModel: args.userModel,
           chatroomModel: args.chatroomModel,
+          sentViaForegroundNoti: args.sentViaForegroundNoti,
+          rname: args.rname,
+          rid: args.rid,
         ),
         settings: data,
       );
@@ -73,17 +86,27 @@ class Router extends RouterBase {
 extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
   Future<dynamic> pushLoginScreen() => push<dynamic>(Routes.loginScreen);
 
+  Future<dynamic> pushSplashScreen() => push<dynamic>(Routes.splashScreen);
+
   Future<dynamic> pushRoomScreen() => push<dynamic>(Routes.roomScreen);
 
   Future<dynamic> pushChatScreen({
     Key key,
     UserModel userModel,
     ChatroomModel chatroomModel,
+    bool sentViaForegroundNoti,
+    String rname,
+    String rid,
   }) =>
       push<dynamic>(
         Routes.chatScreen,
         arguments: ChatScreenArguments(
-            key: key, userModel: userModel, chatroomModel: chatroomModel),
+            key: key,
+            userModel: userModel,
+            chatroomModel: chatroomModel,
+            sentViaForegroundNoti: sentViaForegroundNoti,
+            rname: rname,
+            rid: rid),
       );
 }
 
@@ -96,5 +119,14 @@ class ChatScreenArguments {
   final Key key;
   final UserModel userModel;
   final ChatroomModel chatroomModel;
-  ChatScreenArguments({this.key, this.userModel, this.chatroomModel});
+  final bool sentViaForegroundNoti;
+  final String rname;
+  final String rid;
+  ChatScreenArguments(
+      {this.key,
+      this.userModel,
+      this.chatroomModel,
+      this.sentViaForegroundNoti,
+      this.rname,
+      this.rid});
 }

@@ -28,6 +28,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       yield state.copyWith.call(
           chatroomModel: e.chatroomModel,
           userModel: e.currentUser,
+          rid: "",
           dbQuery: thisdbQuery,
           loadingMessages: false);
     }, sendThisMessage: (e) async* {
@@ -35,10 +36,26 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         final sentAt = DateTime.now().microsecondsSinceEpoch;
         final ChatModel thisChatModel = ChatModel(
             e.message, state.userModel.uid, sentAt, state.userModel.name);
-        await _databaseFacade.sendChatMessage(
-            chatModel: thisChatModel, chatroomModel: state.chatroomModel);
+        print(state.chatroomModel.chatroomId);
+        await DatabaseFacade().sendChatMessage(
+            chatModel: thisChatModel,
+            chatroomModel: state.chatroomModel,
+            rid: state.rid);
       }
-      ;
+    }, sentByForegroundNoti: (e) async* {
+      final thisdbQuery =
+          DatabaseFacade().openThisChatroomQuery(chatroomId: e.rid.trim());
+      yield state.copyWith.call(loadingMessages: true, dbQuery: thisdbQuery);
+      final UserModel userModel = await DatabaseFacade().getUser();
+      final ChatroomModel chatroomModel =
+          ChatroomModel.fromNoti(rid: e.rid, rname: e.rname);
+
+      yield state.copyWith.call(
+          chatroomModel: chatroomModel,
+          userModel: userModel,
+          dbQuery: thisdbQuery,
+          rid: e.rid,
+          loadingMessages: false);
     });
   }
 }
